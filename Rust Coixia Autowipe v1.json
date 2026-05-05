@@ -1,0 +1,255 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2026-05-05T00:00:00-05:00",
+    "name": "Rust Coixia Autowipe v1",
+    "author": "support@coixia.com",
+    "description": "The only aim in Rust is to survive. To do this you will need to overcome struggles such as hunger, thirst and cold. Build a fire. Build a shelter. Kill animals for meat. Protect yourself from other players, and kill them for meat. Create alliances with other players and form a town. Do whatever it takes to survive.",
+    "features": [
+        "steam_disk_space"
+    ],
+    "docker_images": {
+        "Coixia Rust": "ghcr.io/coixia/rust:latest"
+    },
+    "file_denylist": [],
+    "startup": "./RustDedicated -batchmode -beta ${SRCDS_BETAID} +server.port {{SERVER_PORT}} +server.queryport {{QUERY_PORT}} +server.identity \"rust\" +rcon.ip 0.0.0.0 +rcon.port {{RCON_PORT}} +rcon.web true +server.hostname \"{{HOSTNAME}}\" +server.level \"{{LEVEL}}\" +server.description \"{{DESCRIPTION}}\" +server.url \"{{SERVER_URL}}\" +server.headerimage \"{{SERVER_IMG}}\" +server.maxplayers {{MAX_PLAYERS}} +rcon.password \"{{RCON_PASS}}\" +server.saveinterval {{SAVEINTERVAL}} +app.port {{APP_PORT}} +server.worldsize \"{{WORLD_SIZE}}\" +server.seed \"{{WORLD_SEED}}\" {{ADDITIONAL_ARGS}}",
+    "config": {
+        "files": "{}",
+        "startup": "{\"done\": \"Server startup complete\"}",
+        "logs": "{}",
+        "stop": "quit"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!/bin/bash\n# Coixia Rust Install Script\n# The Docker image handles SteamCMD and server installation on first boot.\n# This script just sets up required directories and config files.\n\nmkdir -p /mnt/server/server/rust/cfg\nmkdir -p /mnt/server/logs\n\n# Create a default server.cfg if it doesn't exist\nif [ ! -f /mnt/server/server/rust/cfg/server.cfg ]; then\n    cat > /mnt/server/server/rust/cfg/server.cfg << 'EOF'\nserver.globalchat true\nserver.stability true\nserver.radiation true\nEOF\nfi\n\n# Handle world seed generation for autowipe\nif [ \"${WORLD_SEED}\" == \"0\" ]; then\n    if [ ! -f /mnt/server/seed.txt ]; then\n        cat /dev/urandom | tr -dc '1-9' | fold -w 8 | head -n 1 > /mnt/server/seed.txt\n        echo \"[Coixia] Generated random seed: $(cat /mnt/server/seed.txt)\"\n    fi\nfi\n\n# Handle server regen on reinstall\nif [ \"${REGEN_SERVER}\" == \"1\" ]; then\n    cd /mnt/server/\n    echo \"[Coixia] Regenerating server, removing: ${REMOVE_FILES}\"\n    rm -rf ${REMOVE_FILES}\nfi\n\necho \"[Coixia] Install complete.\"\n",
+            "container": "ghcr.io/ptero-eggs/installers:debian",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "SRCDS_APPID",
+            "description": "",
+            "env_variable": "SRCDS_APPID",
+            "default_value": "258550",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:20",
+            "field_type": "text"
+        },
+        {
+            "name": "Max Players",
+            "description": "The maximum amount of players allowed in the server at once.",
+            "env_variable": "MAX_PLAYERS",
+            "default_value": "40",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|integer",
+            "field_type": "text"
+        },
+        {
+            "name": "Server Name",
+            "description": "The name of your server in the public server list. No quotes or backslashes.",
+            "env_variable": "HOSTNAME",
+            "default_value": "A Rust Server",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:64|regex:/^[^\"'\\\\]*$/",
+            "field_type": "text"
+        },
+        {
+            "name": "Level",
+            "description": "The world file for Rust to use.",
+            "env_variable": "LEVEL",
+            "default_value": "Procedural Map",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:20",
+            "field_type": "text"
+        },
+        {
+            "name": "Description",
+            "description": "The description under your server title. Commonly used for rules & info. Use \\n for newlines. Avoid special characters like quotes.",
+            "env_variable": "DESCRIPTION",
+            "default_value": "Powered by Pterodactyl",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|string|max:512",
+            "field_type": "text"
+        },
+        {
+            "name": "URL",
+            "description": "The URL for your server. This is what comes up when clicking the \"Visit Website\" button.",
+            "env_variable": "SERVER_URL",
+            "default_value": "http://pterodactyl.io",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|url",
+            "field_type": "text"
+        },
+        {
+            "name": "World Size",
+            "description": "World size for procedural map. Min 1000, max 6000. Recommended: 3000-4500 for staging branch.",
+            "env_variable": "WORLD_SIZE",
+            "default_value": "3000",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|integer|min:1000|max:6000",
+            "field_type": "text"
+        },
+        {
+            "name": "World Seed",
+            "description": "Seed for procedural map. Use 0 for a random seed each wipe.",
+            "env_variable": "WORLD_SEED",
+            "default_value": "0",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|integer",
+            "field_type": "text"
+        },
+        {
+            "name": "Server Image",
+            "description": "The header image for the top of your server listing.",
+            "env_variable": "SERVER_IMG",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|url",
+            "field_type": "text"
+        },
+        {
+            "name": "RCON Password",
+            "description": "RCON password. Min 8 characters. Letters, numbers, hyphens and dots only. No special characters.",
+            "env_variable": "RCON_PASS",
+            "default_value": "CHANGEME",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|regex:/^[\\w\\-\\.]+$/|min:8|max:64",
+            "field_type": "text"
+        },
+        {
+            "name": "Save Interval",
+            "description": "Sets the server\u2019s auto-save interval in seconds.",
+            "env_variable": "SAVEINTERVAL",
+            "default_value": "60",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|integer",
+            "field_type": "text"
+        },
+        {
+            "name": "Additional Arguments",
+            "description": "Additional startup parameters. Use this to pass +server.levelurl \"URL\" for custom maps, or any other Rust server parameters.",
+            "env_variable": "ADDITIONAL_ARGS",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Regen Server",
+            "description": "If the server should have its files removed and regenerate the server seed on reinstall.",
+            "env_variable": "REGEN_SERVER",
+            "default_value": "0",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|boolean",
+            "field_type": "text"
+        },
+        {
+            "name": "Files to remove",
+            "description": "A space-separated list of files to remove when regenerating the server on reinstall.",
+            "env_variable": "REMOVE_FILES",
+            "default_value": "server/rust/player.deaths.*.db server/rust/player.identities.*.db server/rust/player.states.*.db server/rust/player.tokens.db proceduralmap.*.*.*.map server/rust/proceduralmap.*.*.*.sav oxide/data/Kits_Data.json oxide/data/NTeleportationHome.json oxide/data/ServerRewards/player_data.json oxide/data/PTTracker/playtime_data.json",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Custom Map URL",
+            "description": "To use a custom map URL, leave this blank and add +server.levelurl \"YOUR_URL\" to Additional Arguments instead. Remove +server.worldsize and +server.seed from startup if using a custom map.",
+            "env_variable": "MAP_URL",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|url",
+            "field_type": "text"
+        },
+        {
+            "name": "Modding Framework",
+            "description": "The modding framework to be used: carbon, oxide, vanilla.\r\nDefaults to \"vanilla\" for a non-modded server installation.",
+            "env_variable": "FRAMEWORK",
+            "default_value": "vanilla",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|in:vanilla,carbon,oxide",
+            "field_type": "text"
+        },
+        {
+            "name": "Beta Branch",
+            "description": "Beta branch. Use \"public\" for main branch (default), or: staging, aux01, aux02, aux03. Server reinstall required after changing.",
+            "env_variable": "SRCDS_BETAID",
+            "default_value": "public",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|string|in:public,staging,aux01,aux02,aux03",
+            "field_type": "text"
+        },
+        {
+            "name": "Auto Update",
+            "description": "Determines if the server will automatically update on start. Set to 0 to disable.",
+            "env_variable": "AUTO_UPDATE",
+            "default_value": "1",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|boolean",
+            "field_type": "text"
+        },
+        {
+            "name": "Query Port",
+            "description": "Port for Steam query connections. Enter your second allocated port.",
+            "env_variable": "QUERY_PORT",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|integer",
+            "field_type": "text"
+        },
+        {
+            "name": "RCON Port",
+            "description": "Port for RCON connections. Enter your third allocated port.",
+            "env_variable": "RCON_PORT",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|integer",
+            "field_type": "text"
+        },
+        {
+            "name": "App Port",
+            "description": "Port for Rust+ app. Enter your fourth allocated port, or -1 to disable.",
+            "env_variable": "APP_PORT",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|integer",
+            "field_type": "text"
+        },
+        {
+            "name": "Server Logo",
+            "description": "URL for the server logo image.",
+            "env_variable": "SERVER_LOGO",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|url",
+            "field_type": "text"
+        }
+    ],
+    "identifier": "rust"
+}
