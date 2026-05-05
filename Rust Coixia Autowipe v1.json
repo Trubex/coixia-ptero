@@ -15,7 +15,7 @@
         "Coixia Rust": "ghcr.io/coixia/rust:latest"
     },
     "file_denylist": [],
-    "startup": "./RustDedicated -batchmode -beta ${SRCDS_BETAID} +server.port {{SERVER_PORT}} +server.queryport {{QUERY_PORT}} +server.identity \"rust\" +rcon.ip 0.0.0.0 +rcon.port {{RCON_PORT}} +rcon.web true +server.hostname \"{{HOSTNAME}}\" +server.level \"{{LEVEL}}\" +server.description \"{{DESCRIPTION}}\" +server.url \"{{SERVER_URL}}\" +server.headerimage \"{{SERVER_IMG}}\" +server.maxplayers {{MAX_PLAYERS}} +rcon.password \"{{RCON_PASS}}\" +server.saveinterval {{SAVEINTERVAL}} +app.port {{APP_PORT}} +server.worldsize \"{{WORLD_SIZE}}\" +server.seed \"{{WORLD_SEED}}\" {{ADDITIONAL_ARGS}}",
+    "startup": "./RustDedicated -batchmode +server.port {{SERVER_PORT}} +server.queryport {{QUERY_PORT}} +server.identity \"rust\" +rcon.ip 0.0.0.0 +rcon.port {{RCON_PORT}} +rcon.web true +server.hostname \"{{HOSTNAME}}\" +server.level \"{{LEVEL}}\" +server.description \"{{DESCRIPTION}}\" +server.url \"{{SERVER_URL}}\" +server.headerimage \"{{SERVER_IMG}}\" +server.maxplayers {{MAX_PLAYERS}} +rcon.password \"{{RCON_PASS}}\" +server.saveinterval {{SAVEINTERVAL}} +app.port {{APP_PORT}} +server.worldsize \"{{WORLD_SIZE}}\" +server.seed \"{{WORLD_SEED}}\" {{ADDITIONAL_ARGS}}",
     "config": {
         "files": "{}",
         "startup": "{\"done\": \"Server startup complete\"}",
@@ -192,12 +192,12 @@
         },
         {
             "name": "Beta Branch",
-            "description": "Beta branch. Use \"public\" for main branch (default), or: staging, aux01, aux02, aux03. Server reinstall required after changing.",
+            "description": "SteamCMD branch to download. Leave blank for standard Rust (public release). Options: staging, aux01, aux02, aux03. Server reinstall required after changing.",
             "env_variable": "SRCDS_BETAID",
-            "default_value": "public",
+            "default_value": "",
             "user_viewable": true,
             "user_editable": true,
-            "rules": "nullable|string|in:public,staging,aux01,aux02,aux03",
+            "rules": "nullable|string|in:,staging,aux01,aux02,aux03",
             "field_type": "text"
         },
         {

@@ -33,12 +33,11 @@ if [[ "${AUTO_UPDATE}" == "1" ]] || [[ -z "${AUTO_UPDATE}" ]]; then
 
     # Build beta flag
     BETA_FLAG=""
-    if [[ -n "${SRCDS_BETAID}" ]] && [[ "${SRCDS_BETAID}" != "public" ]]; then
+    if [[ -n "${SRCDS_BETAID}" ]]; then
         BETA_FLAG="-beta ${SRCDS_BETAID}"
         echo -e "${YELLOW}[Coixia] Using branch: ${SRCDS_BETAID}${NC}"
     else
-        BETA_FLAG="-beta public"
-        echo -e "${CYAN}[Coixia] Using branch: public (main)${NC}"
+        echo -e "${CYAN}[Coixia] Using branch: public (standard)${NC}"
     fi
 
     /home/container/steamcmd/steamcmd.sh \
