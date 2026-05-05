@@ -26,12 +26,21 @@ echo ""
 cd /home/container
 
 # ----------------------------------------
+# Strip -beta flag from startup if no branch set
+# Wisp pre-substitutes ${SRCDS_BETAID} before the container starts,
+# so an empty value leaves "-beta " with no argument. Strip it here.
+# ----------------------------------------
+if [[ -z "${SRCDS_BETAID}" ]]; then
+    STARTUP=$(echo "${STARTUP}" | sed 's/ -beta[[:space:]]*//')
+fi
+
+# ----------------------------------------
 # SteamCMD Auto Update
 # ----------------------------------------
 if [[ "${AUTO_UPDATE}" == "1" ]] || [[ -z "${AUTO_UPDATE}" ]]; then
     echo -e "${CYAN}[Coixia] Running SteamCMD update...${NC}"
 
-    # Build beta flag
+    # Build beta flag for SteamCMD
     BETA_FLAG=""
     if [[ -n "${SRCDS_BETAID}" ]]; then
         BETA_FLAG="-beta ${SRCDS_BETAID}"
