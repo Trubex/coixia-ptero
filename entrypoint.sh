@@ -66,7 +66,7 @@ if [[ "${AUTO_UPDATE}" == "1" ]] || [[ -z "${AUTO_UPDATE}" ]]; then
     /home/container/steamcmd/steamcmd.sh \
         +force_install_dir /home/container \
         +login anonymous \
-        +app_update 258550 ${BETA_FLAG} \
+        +app_update ${SRCDS_APPID:-258550} ${BETA_FLAG} \
         +quit
 
     echo -e "${GREEN}[Coixia] Update complete.${NC}"
