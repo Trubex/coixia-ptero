@@ -35,6 +35,20 @@ if [[ -z "${SRCDS_BETAID}" ]]; then
 fi
 
 # ----------------------------------------
+# Bootstrap SteamCMD into the persistent volume on first boot.
+# It must live in /home/container/steamcmd so it can self-update
+# normally — Pterodactyl mounts a volume at /home/container so
+# anything baked into the image there gets masked.
+# ----------------------------------------
+if [[ ! -f "/home/container/steamcmd/steamcmd.sh" ]]; then
+    echo -e "${CYAN}[Coixia] Installing SteamCMD...${NC}"
+    mkdir -p /home/container/steamcmd
+    curl -sSL https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz \
+        | tar -xzvf - -C /home/container/steamcmd
+    echo -e "${GREEN}[Coixia] SteamCMD installed.${NC}"
+fi
+
+# ----------------------------------------
 # SteamCMD Auto Update
 # ----------------------------------------
 if [[ "${AUTO_UPDATE}" == "1" ]] || [[ -z "${AUTO_UPDATE}" ]]; then
@@ -49,7 +63,7 @@ if [[ "${AUTO_UPDATE}" == "1" ]] || [[ -z "${AUTO_UPDATE}" ]]; then
         echo -e "${CYAN}[Coixia] Using branch: public (standard)${NC}"
     fi
 
-    /opt/steamcmd/steamcmd.sh \
+    /home/container/steamcmd/steamcmd.sh \
         +force_install_dir /home/container \
         +login anonymous \
         +app_update 258550 ${BETA_FLAG} \

@@ -39,13 +39,9 @@ RUN mkdir -p /node_modules/ws /tmp/ws \
     && mv /tmp/ws/*/* /node_modules/ws \
     && rm -rf /tmp/ws /tmp/ws-latest.zip
 
-# Install SteamCMD — must be outside /home/container as Pterodactyl mounts a volume there
-# chmod 777 so any UID Wisp assigns can execute and self-update SteamCMD
-RUN mkdir -p /opt/steamcmd \
-    && curl -sSL https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz | tar -xzvf - -C /opt/steamcmd \
-    && chmod -R 777 /opt/steamcmd
-
 # Create container user
+# SteamCMD is bootstrapped at runtime into /home/container/steamcmd
+# (the persistent volume) so it can self-update normally
 RUN useradd -d /home/container -m container
 
 USER container
