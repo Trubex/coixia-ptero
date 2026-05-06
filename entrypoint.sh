@@ -49,7 +49,7 @@ if [[ "${AUTO_UPDATE}" == "1" ]] || [[ -z "${AUTO_UPDATE}" ]]; then
         echo -e "${CYAN}[Coixia] Using branch: public (standard)${NC}"
     fi
 
-    /home/container/steamcmd/steamcmd.sh \
+    /opt/steamcmd/steamcmd.sh \
         +force_install_dir /home/container \
         +login anonymous \
         +app_update 258550 ${BETA_FLAG} \

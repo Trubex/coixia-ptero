@@ -39,12 +39,13 @@ RUN mkdir -p /node_modules/ws /tmp/ws \
     && mv /tmp/ws/*/* /node_modules/ws \
     && rm -rf /tmp/ws /tmp/ws-latest.zip
 
-# Install SteamCMD
-RUN mkdir -p /home/container/steamcmd \
-    && curl -sSL https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz | tar -xzvf - -C /home/container/steamcmd
+# Install SteamCMD — must be outside /home/container as Pterodactyl mounts a volume there
+RUN mkdir -p /opt/steamcmd \
+    && curl -sSL https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz | tar -xzvf - -C /opt/steamcmd
 
 # Create container user
-RUN useradd -d /home/container -m container
+RUN useradd -d /home/container -m container \
+    && chown -R container:container /opt/steamcmd
 
 USER container
 ENV USER=container HOME=/home/container
