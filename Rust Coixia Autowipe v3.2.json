@@ -182,7 +182,7 @@
         },
         {
             "name": "Modding Framework",
-            "description": "The modding framework to be used: carbon, oxide, vanilla.\r\nDefaults to \"vanilla\" for a non-modded server installation.",
+            "description": "The modding framework to be used: carbon, oxide, vanilla. Defaults to vanilla for a non-modded server installation.",
             "env_variable": "FRAMEWORK",
             "default_value": "vanilla",
             "user_viewable": true,
