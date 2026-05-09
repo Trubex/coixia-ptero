@@ -7,7 +7,7 @@
     "exported_at": "2026-05-05T00:00:00-05:00",
     "name": "Rust Coixia Autowipe v3.2",
     "author": "support@coixia.com",
-    "description": "The only aim in Rust is to survive. To do this you will need to overcome struggles such as hunger, thirst and cold. Build a fire. Build a shelter. Kill animals for meat. Protect yourself from other players, and kill them for meat. Create alliances with other players and form a town. Do whatever it takes to survive.",
+    "description": "Powered by Coixia.com
     "features": [
         "steam_disk_space"
     ],
@@ -54,7 +54,7 @@
             "name": "Server Name",
             "description": "The name of your server in the public server list. No quotes or backslashes.",
             "env_variable": "HOSTNAME",
-            "default_value": "A Rust Server",
+            "default_value": "A Coixia.com Rust Server",
             "user_viewable": true,
             "user_editable": true,
             "rules": "required|string|max:64|regex:/^[^\"'\\\\]*$/",
@@ -84,7 +84,7 @@
             "name": "URL",
             "description": "The URL for your server. This is what comes up when clicking the \"Visit Website\" button.",
             "env_variable": "SERVER_URL",
-            "default_value": "http://pterodactyl.io",
+            "default_value": "http://coixia.com",
             "user_viewable": true,
             "user_editable": true,
             "rules": "nullable|url",
@@ -249,36 +249,6 @@
             "user_editable": true,
             "rules": "nullable|url",
             "field_type": "text"
-        },
-        {
-            "name": "Oxide Channel",
-            "description": "uMod/Oxide release channel: 'develop' (latest features), 'legacy' (stable). Only used if FRAMEWORK is set to 'oxide'.",
-            "env_variable": "OXIDE_CHANNEL",
-            "default_value": "develop",
-            "user_viewable": true,
-            "user_editable": true,
-            "rules": "required|string|in:develop,legacy",
-            "field_type": "text"
-        },
-        {
-            "name": "Carbon Version",
-            "description": "Carbon release version: 'latest' for newest, or specific tag like 'v1.1.5'. Only used if FRAMEWORK is set to 'carbon'. Check GitHub releases for valid tags.",
-            "env_variable": "CARBON_VERSION",
-            "default_value": "latest",
-            "user_viewable": true,
-            "user_editable": true,
-            "rules": "required|string|max:64",
-            "field_type": "text"
-        },
-        {
-            "name": "Auto-Install Plugins",
-            "description": "Comma or semicolon-separated list of plugin URLs to auto-install on server start. Example: https://example.com/plugin1.cs,https://example.com/plugin2.cs Only works if FRAMEWORK is oxide or carbon.",
-            "env_variable": "AUTO_INSTALL_PLUGINS",
-            "default_value": "",
-            "user_viewable": true,
-            "user_editable": true,
-            "rules": "nullable|string",
-            "field_type": "textarea"
         }
     ],
     "identifier": "rust"

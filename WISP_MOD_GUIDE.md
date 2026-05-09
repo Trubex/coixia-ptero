@@ -40,27 +40,24 @@ This guide helps Wisp panel admins and server owners set up and manage Rust mods
 
 ## Installing Mods
 
-### Method 1: Auto-Install from URLs (Easiest)
+### Method 1: Wisp Mod Manager (Recommended)
 
-Perfect for quick setup or deploying server templates!
+Wisp includes a built-in **Mod Manager** for easy plugin installation and management. This is the easiest way to add Oxide/uMod plugins to your server.
 
-1. In Wisp: **Server Settings → Variables**
-2. Find **Auto-Install Plugins** field
-3. Enter plugin URLs (comma or semicolon-separated):
-   ```
-   https://example.com/plugin1.cs,https://example.com/plugin2.cs
-   ```
-   Or paste multiple lines:
-   ```
-   https://raw.githubusercontent.com/user/repo/main/plugin1.cs
-   https://raw.githubusercontent.com/user/repo/main/plugin2.cs
-   ```
-4. **Save and restart server**
-5. Plugins auto-download and install during startup
+**How to use:**
+1. In Wisp panel: **Server Settings → Mod Manager**
+2. Browse available Oxide/uMod plugins
+3. Click **Install** for desired plugins
+4. Plugins auto-download and configure
+5. **Restart server** to activate
 
-**Note**: Only works if FRAMEWORK is set to `oxide` or `carbon`
+**Documentation:** https://gamepanel.notion.site/Mod-Manager-148e9213d0954334aa941156c8937bbb
 
-### Method 2: Via Wisp File Manager (Recommended for Manual Management)
+**Note:** Mod Manager focuses on Oxide/uMod plugins. For Carbon plugins, use manual installation.
+
+### Method 2: Via Wisp File Manager (Manual Installation)
+
+For Carbon plugins or custom plugins not in Mod Manager:
 
 1. **Start the server** with your chosen framework (oxide or carbon)
 2. In Wisp: **File Manager → Navigate to mod directory**
@@ -104,17 +101,17 @@ https://raw.githubusercontent.com/OxideMod/Oxide.Rust/develop/plugins/Economics.
 
 **Vanilla Server (No Mods)**:
 - FRAMEWORK: `vanilla`
-- AUTO_INSTALL_PLUGINS: (leave empty)
+- Use Wisp Mod Manager for Oxide plugins if needed
 
-**Modded Server (Essential Plugins)**:
+**Modded Server (Oxide)**:
 - FRAMEWORK: `oxide`
-- OXIDE_CHANNEL: `develop`
-- AUTO_INSTALL_PLUGINS: `[list your URLs here]`
+- Use Wisp Mod Manager to install plugins
+- Config directory: `/oxide/config/`
 
 **Carbon Server**:
 - FRAMEWORK: `carbon`
-- CARBON_VERSION: `latest`
-- AUTO_INSTALL_PLUGINS: `[list your URLs here]`
+- Manual plugin installation required
+- Config directory: `/carbon/config/`
 
 ---
 
