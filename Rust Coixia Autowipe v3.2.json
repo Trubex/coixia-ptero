@@ -212,31 +212,31 @@
         },
         {
             "name": "Query Port",
-            "description": "Port for Steam query connections. Enter your second allocated port.",
+            "description": "Port for Steam query connections. Automatically allocated by Wisp.",
             "env_variable": "QUERY_PORT",
             "default_value": "",
             "user_viewable": true,
-            "user_editable": true,
+            "user_editable": false,
             "rules": "required|integer",
             "field_type": "text"
         },
         {
             "name": "RCON Port",
-            "description": "Port for RCON connections. Enter your third allocated port.",
+            "description": "Port for RCON connections. Automatically allocated by Wisp.",
             "env_variable": "RCON_PORT",
             "default_value": "",
             "user_viewable": true,
-            "user_editable": true,
+            "user_editable": false,
             "rules": "required|integer",
             "field_type": "text"
         },
         {
             "name": "App Port",
-            "description": "Port for Rust+ app. Enter your fourth allocated port, or -1 to disable.",
+            "description": "Port for Rust+ app. Automatically allocated by Wisp. Set to -1 in startup to disable.",
             "env_variable": "APP_PORT",
             "default_value": "",
             "user_viewable": true,
-            "user_editable": true,
+            "user_editable": false,
             "rules": "required|integer",
             "field_type": "text"
         },
