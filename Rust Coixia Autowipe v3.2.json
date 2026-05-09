@@ -249,6 +249,36 @@
             "user_editable": true,
             "rules": "nullable|url",
             "field_type": "text"
+        },
+        {
+            "name": "Oxide Channel",
+            "description": "uMod/Oxide release channel: 'develop' (latest features), 'legacy' (stable). Only used if FRAMEWORK is set to 'oxide'.",
+            "env_variable": "OXIDE_CHANNEL",
+            "default_value": "develop",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|in:develop,legacy",
+            "field_type": "text"
+        },
+        {
+            "name": "Carbon Version",
+            "description": "Carbon release version: 'latest' for newest, or specific tag like 'v1.1.5'. Only used if FRAMEWORK is set to 'carbon'. Check GitHub releases for valid tags.",
+            "env_variable": "CARBON_VERSION",
+            "default_value": "latest",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:64",
+            "field_type": "text"
+        },
+        {
+            "name": "Auto-Install Plugins",
+            "description": "Comma or semicolon-separated list of plugin URLs to auto-install on server start. Example: https://example.com/plugin1.cs,https://example.com/plugin2.cs Only works if FRAMEWORK is oxide or carbon.",
+            "env_variable": "AUTO_INSTALL_PLUGINS",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|string",
+            "field_type": "textarea"
         }
     ],
     "identifier": "rust"

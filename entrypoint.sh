@@ -75,21 +75,51 @@ else
 fi
 
 # ----------------------------------------
-# uMod (Oxide) Update
+# Modding Framework Setup
 # ----------------------------------------
+FRAMEWORK=${FRAMEWORK:-vanilla}
+
 if [[ "${FRAMEWORK}" == "oxide" ]]; then
-    echo -e "${CYAN}[Coixia] Updating uMod/Oxide...${NC}"
-    OXIDE_URL="https://umod.org/games/rust/download/develop"
+    echo -e "${CYAN}[Coixia] Setting up uMod/Oxide...${NC}"
+    OXIDE_CHANNEL=${OXIDE_CHANNEL:-develop}
+    OXIDE_URL="https://umod.org/games/rust/download/${OXIDE_CHANNEL}"
+    
+    mkdir -p /home/container/oxide/plugins /home/container/oxide/data /home/container/oxide/config
+    
     curl -sSL -o /tmp/oxide.zip "${OXIDE_URL}"
     if [[ $? -eq 0 ]]; then
         unzip -o /tmp/oxide.zip -d /home/container > /dev/null 2>&1
         rm /tmp/oxide.zip
-        echo -e "${GREEN}[Coixia] uMod updated.${NC}"
+        echo -e "${GREEN}[Coixia] uMod/Oxide (${OXIDE_CHANNEL}) installed successfully.${NC}"
     else
-        echo -e "${RED}[Coixia] Failed to download uMod, skipping.${NC}"
+        echo -e "${RED}[Coixia] Failed to download Oxide from ${OXIDE_CHANNEL} channel.${NC}"
     fi
+elif [[ "${FRAMEWORK}" == "carbon" ]]; then
+    echo -e "${CYAN}[Coixia] Setting up Carbon...${NC}"
+    CARBON_VERSION=${CARBON_VERSION:-latest}
+    CARBON_URL="https://github.com/CarbonCommunity/Carbon/releases/download/${CARBON_VERSION}/Carbon.zip"
+    
+    mkdir -p /home/container/carbon/plugins /home/container/carbon/data /home/container/carbon/config
+    
+    curl -sSL -L -o /tmp/carbon.zip "${CARBON_URL}"
+    if [[ $? -eq 0 ]]; then
+        unzip -o /tmp/carbon.zip -d /home/container > /dev/null 2>&1
+        rm /tmp/carbon.zip
+        echo -e "${GREEN}[Coixia] Carbon (${CARBON_VERSION}) installed successfully.${NC}"
+    else
+        echo -e "${RED}[Coixia] Failed to download Carbon. Verify CARBON_VERSION is valid (e.g., 'latest' or 'v1.x.x').${NC}"
+    fi
+elif [[ "${FRAMEWORK}" == "vanilla" ]]; then
+    echo -e "${CYAN}[Coixia] Framework: vanilla (no mods).${NC}"
 else
-    echo -e "${CYAN}[Coixia] Framework: ${FRAMEWORK:-vanilla}, skipping uMod update.${NC}"
+    echo -e "${RED}[Coixia] Unknown framework: ${FRAMEWORK}. Use 'vanilla', 'oxide', or 'carbon'.${NC}"
+fi
+
+# ----------------------------------------
+# Auto-Install Plugins
+# ----------------------------------------
+if [[ -n "${AUTO_INSTALL_PLUGINS}" ]]; then
+    source /install-plugins.sh
 fi
 
 # ----------------------------------------

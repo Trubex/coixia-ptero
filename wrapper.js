@@ -40,7 +40,6 @@ const rconPass = process.env.RCON_PASS || '';
 
 let ws = null;
 let connected = false;
-let pollInterval = null;
 
 function connectRcon() {
     if (!rconPort || !rconPass) return;
@@ -50,26 +49,29 @@ function connectRcon() {
 
         ws.on('open', () => {
             connected = true;
+            console.log('[Coixia] Connected to RCON');
         });
 
         ws.on('error', () => {
             connected = false;
+            // Retry connection after 5 seconds on error
+            setTimeout(() => connectRcon(), 5000);
         });
 
         ws.on('close', () => {
             connected = false;
+            // Retry connection after 5 seconds on close
+            setTimeout(() => connectRcon(), 5000);
         });
     } catch (e) {
-        // Ignore connection errors during startup
+        // Ignore connection errors during startup, retry later
+        setTimeout(() => connectRcon(), 5000);
     }
 }
 
-// Start polling for RCON after 30s to give server time to boot
+// Start attempting RCON connection after 30s to give server time to boot
 setTimeout(() => {
     connectRcon();
-    pollInterval = setInterval(() => {
-        if (!connected) connectRcon();
-    }, 5000);
 }, 30000);
 
 process.on('SIGTERM', () => {
