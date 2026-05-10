@@ -1,5 +1,4 @@
 {
-    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
     "meta": {
         "version": "PTDL_v2",
         "update_url": null
@@ -177,7 +176,7 @@
             "default_value": "",
             "user_viewable": true,
             "user_editable": true,
-            "rules": "nullable|url",
+            "rules": "nullable|string",
             "field_type": "text"
         },
         {
@@ -247,7 +246,7 @@
             "default_value": "",
             "user_viewable": true,
             "user_editable": true,
-            "rules": "nullable|url",
+            "rules": "nullable|string",
             "field_type": "text"
         }
     ]
