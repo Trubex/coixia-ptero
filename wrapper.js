@@ -5,12 +5,18 @@ const WebSocket = require('/node_modules/ws');
 
 // Get startup command from args
 const args = process.argv.slice(2);
-const startup = args.join(' ');
+const rawStartup = args.join(' ');
 
-if (!startup) {
+if (!rawStartup) {
     console.error('[Coixia] No startup command provided.');
     process.exit(1);
 }
+
+// Wisp passes {{VARIABLE}} placeholders unsubstituted in STARTUP and sets each
+// variable as an individual env var — substitute them here before running.
+const startup = rawStartup.replace(/\{\{(\w+)\}\}/g, (match, varName) => {
+    return process.env[varName] !== undefined ? process.env[varName] : '';
+});
 
 console.log(`[Coixia] Starting: ${startup}`);
 

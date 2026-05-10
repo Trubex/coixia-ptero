@@ -14,7 +14,7 @@
         "Coixia Rust": "ghcr.io/trubex/rust:latest"
     },
     "file_denylist": [],
-    "startup": "./RustDedicated -batchmode{{SRCDS_BETAID}} +server.port {{SERVER_PORT}} +server.queryport {{QUERY_PORT}} +server.identity \"rust\" +rcon.ip 0.0.0.0 +rcon.port {{RCON_PORT}} +rcon.web true +server.hostname \"{{SERVER_NAME}}\" +server.level \"{{LEVEL}}\" +server.description \"{{DESCRIPTION}}\" +server.url \"{{SERVER_URL}}\" +server.headerimage \"{{SERVER_LOGO}}\" +server.maxplayers {{MAX_PLAYERS}} +rcon.password \"{{RCON_PASS}}\" +server.saveinterval {{SAVEINTERVAL}} +app.port {{APP_PORT}} +server.worldsize \"{{WORLD_SIZE}}\" +server.seed \"{{WORLD_SEED}}\" {{ADDITIONAL_ARGS}}",
+    "startup": "./RustDedicated -batchmode {{SRCDS_BETAID}} +server.port {{SERVER_PORT}} +server.queryport {{QUERY_PORT}} +server.identity \"rust\" +rcon.ip 0.0.0.0 +rcon.port {{RCON_PORT}} +rcon.web true +server.hostname \"{{SERVER_NAME}}\" +server.level \"{{LEVEL}}\" +server.description \"{{DESCRIPTION}}\" +server.url \"{{SERVER_URL}}\" +server.headerimage \"{{SERVER_LOGO}}\" +server.maxplayers {{MAX_PLAYERS}} +rcon.password \"{{RCON_PASS}}\" +server.saveinterval {{SAVEINTERVAL}} +app.port {{APP_PORT}} +server.worldsize \"{{WORLD_SIZE}}\" +server.seed \"{{WORLD_SEED}}\" {{ADDITIONAL_ARGS}}",
     "config": {
         "files": "{}",
         "startup": "{\"done\": \"Server startup complete\"}",
@@ -181,9 +181,9 @@
         },
         {
             "name": "Beta Branch",
-            "description": "SteamCMD branch to download. Use ' -beta staging' for staging, ' -beta aux01' for aux01, etc. Leave blank for standard Rust (public release). Server reinstall required after changing.",
+            "description": "SteamCMD branch to download. Use '-beta staging' for staging, '-beta aux01' for aux01, etc. Leave blank for standard Rust (public release). Server reinstall required after changing.",
             "env_variable": "SRCDS_BETAID",
-            "default_value": " -beta public",
+            "default_value": "-beta public",
             "user_viewable": true,
             "user_editable": true,
             "rules": "nullable|string",
