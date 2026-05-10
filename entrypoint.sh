@@ -26,15 +26,6 @@ echo ""
 cd /home/container
 
 # ----------------------------------------
-# Strip -beta flag from startup if no branch set
-# Wisp pre-substitutes ${SRCDS_BETAID} before the container starts,
-# so an empty value leaves "-beta " with no argument. Strip it here.
-# ----------------------------------------
-if [[ -z "${SRCDS_BETAID}" ]]; then
-    STARTUP=$(echo "${STARTUP}" | sed 's/ -beta[[:space:]]*//')
-fi
-
-# ----------------------------------------
 # Bootstrap SteamCMD into the persistent volume on first boot.
 # It must live in /home/container/steamcmd so it can self-update
 # normally — Pterodactyl mounts a volume at /home/container so
@@ -57,7 +48,7 @@ if [[ "${AUTO_UPDATE}" == "1" ]] || [[ -z "${AUTO_UPDATE}" ]]; then
     # Build beta flag for SteamCMD
     BETA_FLAG=""
     if [[ -n "${SRCDS_BETAID}" ]]; then
-        BETA_FLAG="-beta ${SRCDS_BETAID}"
+        BETA_FLAG="${SRCDS_BETAID}"
         echo -e "${YELLOW}[Coixia] Using branch: ${SRCDS_BETAID}${NC}"
     else
         echo -e "${CYAN}[Coixia] Using branch: public (standard)${NC}"
