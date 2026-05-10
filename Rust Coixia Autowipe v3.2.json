@@ -202,12 +202,12 @@
         },
         {
             "name": "Beta Branch",
-            "description": "SteamCMD branch to download. Leave blank for standard Rust (public release). Options: staging, aux01, aux02, aux03. Server reinstall required after changing.",
+            "description": "SteamCMD branch to download. Use ' -beta staging' for staging, ' -beta aux01' for aux01, etc. Leave blank for standard Rust (public release). Server reinstall required after changing.",
             "env_variable": "SRCDS_BETAID",
             "default_value": " -beta public",
             "user_viewable": true,
             "user_editable": true,
-            "rules": "nullable|string|in: -beta public, -beta staging, -beta aux01, -beta aux02, -beta aux03,",
+            "rules": "nullable|string",
             "field_type": "text"
         },
         {
